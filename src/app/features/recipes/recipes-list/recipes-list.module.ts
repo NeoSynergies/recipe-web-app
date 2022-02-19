@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { RecipesListPageRoutingModule } from './recipes-list-routing.module';
 
 import { RecipesListPage } from './recipes-list.page';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { RecipesListPage } from './recipes-list.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    RecipesListPageRoutingModule
+    RecipesListPageRoutingModule,
+    RouterModule
   ],
   declarations: [RecipesListPage]
 })

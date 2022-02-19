@@ -25,7 +25,7 @@ export class RecipesListPage implements OnInit {
   }
 
   onSeeRecipeDetails(recipeId: string) {
-    
+
   }
 
 }
