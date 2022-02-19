@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { User } from 'src/app/common/interfaces/user';
 import { AuthService } from 'src/app/common/services/auth/auth.service';
+import { RecipesService } from 'src/app/common/services/recipes/recipes.service';
 
 @Component({
   selector: 'app-edit-recipe',
@@ -11,7 +13,9 @@ export class EditRecipePage implements OnInit {
   user: User;
   recipe;
   constructor(
-    private authService: AuthService
+    private authService: AuthService,
+    private recipesService: RecipesService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -19,6 +23,17 @@ export class EditRecipePage implements OnInit {
       .subscribe(user => {
         this.user = user;
         this.recipe = history.state.recipe;
+      });
+  }
+
+  onSubmitRecipe(event: any) {
+
+    console.log('THE FORM IN EDIT RECIPE');
+    console.log(event);
+
+    this.recipesService.updateRecipe(event)
+      .subscribe(() => {
+        this.router.navigate(['/recipes/']);
       });
   }
 

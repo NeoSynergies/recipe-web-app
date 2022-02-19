@@ -14,27 +14,6 @@
   </ion-item>
 
   <div class="title-with-button">
-    <h3>Steps</h3>
-    <ion-button fill="clear" (click)="addStep()">
-      <ion-icon name="add-outline" slot="start"></ion-icon>
-      Add step
-    </ion-button>
-  </div>
-
-  <div formArrayName="steps">
-    <ol>
-      <div *ngFor="let item of steps.controls; let stepIndex=index" [formGroupName]="stepIndex">
-        <li class="dynamic-li">
-          <ion-item>
-            <ion-textarea autoGrow="true" formControlName="step" placeholder="Write this step..."></ion-textarea>
-            <ion-button color="danger" (click)="deleteStep(stepIndex)">Delete step</ion-button>
-          </ion-item>
-        </li>
-      </div>
-    </ol>
-  </div>
-
-  <div class="title-with-button">
     <h3>Ingredients</h3>
     <ion-button fill="clear" (click)="addIngredient()">
       <ion-icon name="add-outline" slot="start"></ion-icon>
@@ -56,6 +35,27 @@
       </div>
     </ul>
 
+  </div>
+
+  <div class="title-with-button">
+    <h3>Steps</h3>
+    <ion-button fill="clear" (click)="addStep()">
+      <ion-icon name="add-outline" slot="start"></ion-icon>
+      Add step
+    </ion-button>
+  </div>
+
+  <div formArrayName="steps">
+    <ol>
+      <div *ngFor="let item of steps.controls; let stepIndex=index" [formGroupName]="stepIndex">
+        <li class="dynamic-li">
+          <ion-item>
+            <ion-textarea autoGrow="true" formControlName="step" placeholder="Write this step..."></ion-textarea>
+            <ion-button color="danger" (click)="deleteStep(stepIndex)">Delete step</ion-button>
+          </ion-item>
+        </li>
+      </div>
+    </ol>
   </div>
 
   <ion-button type="submit" [disabled]="!productForm.valid">Enviar</ion-button>

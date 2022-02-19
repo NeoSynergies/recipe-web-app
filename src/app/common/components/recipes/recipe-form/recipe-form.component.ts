@@ -28,19 +28,13 @@ export class RecipeFormComponent implements OnInit {
   ngOnInit() {
 
     this.productForm = this.fb.group({
-      title: ['', [Validators.required]],
+      title: this.recipe ? [this.recipe.title, [Validators.required]] : ['', [Validators.required]],
       imageUrl: [null, []],
       ingredients: this.fb.array([this.fb.group({amount: null, unit: '', label: ''})]),
       steps: this.fb.array([this.fb.group({step:''})])
     });
 
     if (this.recipe) {
-      this.productForm.patchValue({
-        title: this.recipe.title,
-        imageUrl: this.recipe.imageUrl,
-        ingredients: this.recipe.ingredients,
-        steps: this.recipe.ingredients
-      });
 
       // we set the ingredients
       this.recipe.ingredients.map(ingredient =>  {
@@ -50,7 +44,7 @@ export class RecipeFormComponent implements OnInit {
       // we set the steps
       this.recipe.steps.map(step =>  {
         this.addStep(step);
-      })
+      });
     }
 
   }
@@ -95,24 +89,43 @@ export class RecipeFormComponent implements OnInit {
       }
       reader.readAsDataURL(event.target.files[0]);  // to trigger onload
     }
-    const fileList: FileList = event.target.files;  
-    const file: File = fileList[0];
+    const fileList: FileList = event.target.files;
   }
 
   // SUBMIT FUNCTION
   onSubmit() {
+    // if the form is valid
     if (this.productForm.valid) {
       const recipe = this.productForm.value;
+
+      // we clear the empty objects of steps and ingredients
+      recipe.steps = this.clearEmptyObjects(recipe.steps);
+      recipe.ingredients = this.clearEmptyObjects(recipe.ingredients);
+
+      // we extract the steps
       recipe.steps = recipe.steps.map(step => {
         return step.step;
       });
+
+      // we set the user id
       recipe.userId = this.user.id;
 
+      // if it is the edit page, we set again the recipe id
+      if(this.recipe) recipe.id = this.recipe.id;
+
+      // we emit the recipe
       this.submitRecipe.emit(recipe);
     }
     return;
   }
 
-  
-
+  // function to clear empty objects/values from arrays
+  private clearEmptyObjects(array: []) {
+    return array.filter((element: any) => {
+      // for steps
+      if (element.step === '') return false;
+      if(element.amount === null || element.unit === '' || element.label === '') return false;
+      return true;
+    })
+  }
 }

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { Recipe } from '../../interfaces/recipes';
 
 @Injectable({
@@ -21,14 +22,21 @@ export class RecipesService {
   }
 
   addRecipe(recipe: any): Observable<any> {
-    recipe.id = this.generateId();
+    if (!recipe.id) recipe.id = this.generateId();
     // we change the url to show real pics because we don't implement image upload in the backedn
     recipe.imageUrl = '/assets/dummy.jpg';
     return this.http.put('http://localhost:3000/recipes/' + recipe.id, recipe);
   }
 
-  updateRecipe() {
-
+  updateRecipe(recipe: any): Observable<any> {
+    // we delete the recipe
+    return this.http.delete('http://localhost:3000/recipes/' + recipe.id)
+      .pipe(
+        switchMap(() => {
+          // we add it again
+          return this.addRecipe(recipe)
+        })
+      );
   }
 
   deleteRecipe(recipeId): Observable<any> {

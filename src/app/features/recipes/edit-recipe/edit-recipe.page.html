@@ -5,7 +5,7 @@
 
         <h1>Edit recipe</h1>
 
-        <app-recipe-form [user]="user" [recipe]="recipe"></app-recipe-form>
+        <app-recipe-form [user]="user" [recipe]="recipe" (submitRecipe)="onSubmitRecipe($event)"></app-recipe-form>
 
       </ion-col>
     </ion-row>
