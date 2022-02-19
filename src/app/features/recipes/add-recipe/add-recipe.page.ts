@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { User } from 'src/app/common/interfaces/user';
 import { AuthService } from 'src/app/common/services/auth/auth.service';
 import { RecipesService } from 'src/app/common/services/recipes/recipes.service';
@@ -15,7 +16,8 @@ export class AddRecipePage implements OnInit {
   constructor(
     private fb: FormBuilder,
     private recipesService: RecipesService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) { }
 
   productForm: FormGroup;
@@ -35,10 +37,9 @@ export class AddRecipePage implements OnInit {
     })
   }
 
-  get ingredients() {
-    return this.productForm.get('ingredients') as FormArray;
-  }
 
+
+  // STEPS 
   get steps() {
     return this.productForm.get('steps') as FormArray;
   }
@@ -51,7 +52,10 @@ export class AddRecipePage implements OnInit {
     this.steps.removeAt(index);
   }
 
-  /////// This is new /////////////////
+  // INGREDIENTS
+  get ingredients() {
+    return this.productForm.get('ingredients') as FormArray;
+  }
 
   addIngredient() {
     this.ingredients.push(this.fb.group({amount: null, unit: '', label: ''}));
@@ -61,20 +65,20 @@ export class AddRecipePage implements OnInit {
     this.ingredients.removeAt(index);
   }
 
+  // FILE HANDLING
   onFileChange(event) {
     if (event.target.files && event.target.files[0]) {
-      let reader = new FileReader();
+      const reader = new FileReader();
       reader.onload = (event:any) => {
         this.img1 = event.target.result;
       }
       reader.readAsDataURL(event.target.files[0]);  // to trigger onload
     }
-    
-    let fileList: FileList = event.target.files;  
-    let file: File = fileList[0];
-    console.log(file);
+    const fileList: FileList = event.target.files;  
+    const file: File = fileList[0];
   }
 
+  // SUBMIT FUNCTION
   onSubmit() {
     if (this.productForm.valid) {
       const recipe = this.productForm.value;
@@ -84,7 +88,10 @@ export class AddRecipePage implements OnInit {
       recipe.userId = this.user.id;
       
       this.recipesService.addRecipe(recipe)
-        .subscribe(() => console.log('Done'));
+        .subscribe(() => {
+          this.router.navigate(['/recipes/']);
+          this.productForm.reset();
+        });
     }
     return;
   }

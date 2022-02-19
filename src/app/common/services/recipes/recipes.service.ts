@@ -20,7 +20,7 @@ export class RecipesService {
     return this.http.get<Recipe>('http://localhost:3000/recipes/' + recipeId);
   }
 
-  addRecipe(recipe: any) {
+  addRecipe(recipe: any): Observable<any> {
     recipe.id = this.generateId();
     // we change the url to show real pics because we don't implement image upload in the backedn
     recipe.imageUrl = '/assets/dummy.jpg';
@@ -31,8 +31,8 @@ export class RecipesService {
 
   }
 
-  deleteRecipe() {
-
+  deleteRecipe(recipeId): Observable<any> {
+    return this.http.delete<any>('http://localhost:3000/recipes/' + recipeId);
   }
 
   // id generator function, if we would need this in more places, we should create a public service

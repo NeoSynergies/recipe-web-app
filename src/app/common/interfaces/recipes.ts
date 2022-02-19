@@ -1,5 +1,6 @@
 export interface Recipe {
     id: string;
+    userId?: string;
     title: string;
     imageUrl: string;
     steps: string[];

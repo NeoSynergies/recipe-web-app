@@ -24,6 +24,11 @@
               {{ step }} 
             </li>
           </ol>
+
+          <ion-button *ngIf="user.id === recipe.userId" expand="block" fill="clear" color="danger" (click)="onDeleteRecipe()">
+            <ion-icon name="add-outline" slot="start"></ion-icon>
+            Delete a recipe
+          </ion-button>
         </div>
       </ion-col>
     </ion-row>
