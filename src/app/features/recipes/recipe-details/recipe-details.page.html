@@ -13,7 +13,7 @@
           <ul>
             <li *ngFor="let ingredient of recipe.ingredients">
               <div>
-                {{ ingredient.amount }} {{ ingredient.unit }} of {{ ingredient.label }} <app-add-to-shopping-list [valueToAdd]="ingredient" typeOfValue="ingredient"></app-add-to-shopping-list>
+                {{ ingredient.amount }} {{ ingredient.unit }} of {{ ingredient.label }} <app-add-to-shopping-list [values]="ingredient" valuesCategory="ingredients"></app-add-to-shopping-list>
               </div>
             </li>
           </ul>
