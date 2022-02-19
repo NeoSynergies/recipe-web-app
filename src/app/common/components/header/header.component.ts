@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { PopoverController } from '@ionic/angular';
 import { tap } from 'rxjs/operators';
 import { ShoppingListService } from '../../services/shopping-list/shopping-list.service';
+import { ShoppingListPopoverComponent } from './shopping-list-popover/shopping-list-popover.component';
 
 @Component({
   selector: 'app-header',
@@ -10,7 +12,8 @@ import { ShoppingListService } from '../../services/shopping-list/shopping-list.
 export class HeaderComponent implements OnInit {
   shoppingListElements = [];
   constructor(
-    private shoppingListService: ShoppingListService
+    private shoppingListService: ShoppingListService,
+    public popoverController: PopoverController
   ) { }
 
   ngOnInit() {
@@ -18,4 +21,16 @@ export class HeaderComponent implements OnInit {
       .subscribe(elements => this.shoppingListElements = elements);
   }
 
+  async onOpenShoppingList(ev, shoppingListElements) {
+    const popover = await this.popoverController.create({
+      component: ShoppingListPopoverComponent,
+      event: ev,
+      translucent: true,
+      cssClass: 'shopping-list-popover',
+      componentProps: {
+        shoppingListElements
+      }
+    });
+    return await popover.present();
+  }
 }

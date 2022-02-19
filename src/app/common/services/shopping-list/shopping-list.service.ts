@@ -17,6 +17,8 @@ export class ShoppingListService {
     // we assign the id if the element have it and if not we generate one
     let valueId: any = values.id ? values.id : this.generateId();
     values.id = valueId;
+    values.category = category;
+    
     return this.http.put('http://localhost:3000/' + category + '/' + valueId, {
       [valueId]: values
     })

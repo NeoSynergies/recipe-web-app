@@ -1,0 +1,22 @@
+<div id="shopping-list-popover">
+
+  <div *ngIf="shoppingListElements.length > 0">
+    <div *ngFor="let property of key">
+      <ion-item-group>
+        <h4>{{property | titlecase }}</h4>
+        <ion-item *ngFor="let ingredient of groupedShoppingListElements[property]">
+          <ion-label>
+            {{ ingredient.label }}
+          </ion-label>
+          <ion-buttons size="small">
+            <ion-button><ion-icon slot="icon-only" name="trash-outline"></ion-icon></ion-button>
+          </ion-buttons>
+        </ion-item>
+      </ion-item-group>
+    </div>
+  </div>
+
+  <div *ngIf="shoppingListElements.length <= 0">
+    <p style="text-align: center;">There are no elements in the shopping list</p>
+  </div>
+</div>
