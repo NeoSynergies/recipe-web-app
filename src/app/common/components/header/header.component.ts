@@ -18,7 +18,12 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.shoppingListService.shoppingListElements
-      .subscribe(elements => this.shoppingListElements = elements);
+      .subscribe(elements => {
+        console.log('SUSCRITO');
+        console.log(elements);
+        
+        this.shoppingListElements = elements
+      });
   }
 
   async onOpenShoppingList(ev, shoppingListElements) {
@@ -26,10 +31,7 @@ export class HeaderComponent implements OnInit {
       component: ShoppingListPopoverComponent,
       event: ev,
       translucent: true,
-      cssClass: 'shopping-list-popover',
-      componentProps: {
-        shoppingListElements
-      }
+      cssClass: 'shopping-list-popover'
     });
     return await popover.present();
   }

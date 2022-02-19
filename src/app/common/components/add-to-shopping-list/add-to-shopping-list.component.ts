@@ -17,7 +17,7 @@ export class AddToShoppingListComponent implements OnInit {
   ngOnInit() {}
 
   onAddToShoppingList(): void {
-    this.shoppingListService.addValueToShoppingList(this.values, this.valuesCategory)
+    this.shoppingListService.addElementToShoppingList(this.values, this.valuesCategory)
       .subscribe(result => console.log(this.valuesCategory + ' added to shopping list'));
   }
 

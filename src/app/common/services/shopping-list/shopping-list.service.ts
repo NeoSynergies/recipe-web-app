@@ -11,22 +11,20 @@ export class ShoppingListService {
 
   constructor(
     private http: HttpClient
-  ) { }
+  ) {
+    this.getShoppingListIngredients();
+  }
 
-  addValueToShoppingList(values: any, category: string): Observable<any> {
+  addElementToShoppingList(values: any, category: string): Observable<any> {
     // we assign the id if the element have it and if not we generate one
     let valueId: any = values.id ? values.id : this.generateId();
     values.id = valueId;
     values.category = category;
     
-    return this.http.put('http://localhost:3000/' + category + '/' + valueId, {
-      [valueId]: values
-    })
+    return this.http.put('http://localhost:3000/' + category + '/' + valueId, values)
       .pipe(
         tap(
-          (values) => {
-            this.shoppingListElements.next([...this.shoppingListElements.getValue(), values[valueId]])
-          },
+          (values) => this.shoppingListElements.next([...this.shoppingListElements.getValue(), values]),
           (err) => {
             console.log('El error');
             console.log(err);
@@ -34,6 +32,27 @@ export class ShoppingListService {
           }
         )
       );
+  }
+
+  deleteShoppingListElements(values: any): Observable<any> {
+    return this.http.delete('http://localhost:3000/' + values.category + '/' + values.id)
+      .pipe(
+        tap(() => {
+          let newleements = [...this.shoppingListElements.getValue()];
+          let newBehaviorSubjectValues = newleements.filter(element => element.id !== values.id);
+          this.shoppingListElements.next(newBehaviorSubjectValues);
+        })
+      );
+  }
+
+  getShoppingListIngredients() {
+    this.http.get('http://localhost:3000/ingredients')
+      .subscribe((ingredients) => {
+        console.log('loososs');
+        
+        console.log(ingredients);
+        this.shoppingListElements.next(ingredients);
+      });
   }
 
 
