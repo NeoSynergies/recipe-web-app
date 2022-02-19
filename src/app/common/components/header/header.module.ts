@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { ShoppingListPopoverComponent } from './shopping-list-popover/shopping-list-popover.component';
 import { HeaderComponent } from './header.component';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -11,6 +12,7 @@ import { HeaderComponent } from './header.component';
   imports: [
     CommonModule,
     IonicModule,
+    RouterModule
   ],
   exports: [
     HeaderComponent

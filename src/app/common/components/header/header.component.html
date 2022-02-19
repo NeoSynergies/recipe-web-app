@@ -5,7 +5,7 @@
     <ion-col size="9" offset="1.5" class="toolbar-col">
       <ion-title>Recipe web app</ion-title>
       <ion-buttons collapse="true">
-        <ion-button>Recipes</ion-button>
+        <ion-button [routerLink]="['/' + 'recipes']">Recipes</ion-button>
         <ion-button>Global search archive</ion-button>
         <ion-button (click)="onOpenShoppingList($event, shoppingListElements)">
           <ion-badge *ngIf="shoppingListElements.length !== 0 || null" slot="start">{{ shoppingListElements.length }}</ion-badge>
