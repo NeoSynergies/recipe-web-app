@@ -5,12 +5,14 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { RecipeDetailsPage } from './recipe-details.page';
+import { RecipeDetailsPageRoutingModule } from './recipe-details-routing.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule
+    IonicModule,
+    RecipeDetailsPageRoutingModule
   ],
   declarations: [RecipeDetailsPage]
 })

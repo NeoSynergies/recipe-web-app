@@ -16,6 +16,10 @@ export class RecipesService {
     return this.http.get<Recipe[]>('http://localhost:3000/recipes');
   }
 
+  getOneRecipe(recipeId: string): Observable<Recipe> {
+    return this.http.get<Recipe>('http://localhost:3000/recipes/' + recipeId);
+  }
+
   addRecipe() {
 
   }
