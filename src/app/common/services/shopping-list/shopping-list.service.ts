@@ -45,8 +45,7 @@ export class ShoppingListService {
     return this.http.delete('http://localhost:3000/' + values.category + '/' + values.id)
       .pipe(
         tap(() => {
-          let newleements = [...this.shoppingListElements.getValue()];
-          let newBehaviorSubjectValues = newleements.filter(element => element.id !== values.id);
+          let newBehaviorSubjectValues = this.shoppingListElements.getValue().filter(element => element.id !== values.id);
           this.shoppingListElements.next(newBehaviorSubjectValues);
         })
       );
