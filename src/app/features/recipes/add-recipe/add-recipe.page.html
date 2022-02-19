@@ -12,7 +12,7 @@
             <img [src]="img1" alt="">
           </div>
           <ion-item class="margin-top-element">
-            <ion-input accept="image/*" (change)="onFileChange($event)" formControlName="recipeImg" type="file" placeholder="Title of the recipe"></ion-input>
+            <ion-input accept="image/*" (change)="onFileChange($event)" formControlName="imageUrl" type="file" placeholder="Title of the recipe"></ion-input>
           </ion-item>
           
 
@@ -54,9 +54,9 @@
               <div *ngFor="let item of ingredients.controls; let ingredientIndex=index" [formGroupName]="ingredientIndex">
                 <li class="dynamic-li">
                   <ion-item>
-                    <ion-input type="text" placeholder="Name" formControlName="ingredientName"></ion-input>
-                    <ion-input type="text" placeholder="g" formControlName="ingredientUnit"></ion-input>
-                    <ion-input type="number" placeholder="Quantity" formControlName="ingredientQuantity"></ion-input>
+                    <ion-input type="text" placeholder="Name" formControlName="label"></ion-input>
+                    <ion-input type="text" placeholder="g" formControlName="unit"></ion-input>
+                    <ion-input type="number" placeholder="Quantity" formControlName="amount"></ion-input>
                     <ion-button color="danger" (click)="deleteIngredient(ingredientIndex)">Delete ingredient</ion-button>
                   </ion-item>
                 </li>

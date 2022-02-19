@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { User } from 'src/app/common/interfaces/user';
+import { AuthService } from 'src/app/common/services/auth/auth.service';
+import { RecipesService } from 'src/app/common/services/recipes/recipes.service';
 
 @Component({
   selector: 'app-add-recipe',
@@ -8,17 +11,26 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 })
 export class AddRecipePage implements OnInit {
   img1;
-  constructor(private fb: FormBuilder) { }
+  user: User;
+  constructor(
+    private fb: FormBuilder,
+    private recipesService: RecipesService,
+    private authService: AuthService
+  ) { }
 
   productForm: FormGroup;
 
   ngOnInit() {
+    this.authService.user
+      .subscribe(user => {
+        this.user = user;
+      });
 
     /* Initiate the form structure */
     this.productForm = this.fb.group({
       title: ['', [Validators.required]],
-      recipeImg: [null, [Validators.required]],
-      ingredients: this.fb.array([this.fb.group({ingredientQuantity: null, ingredientUnit: '', ingredientName: ''})]),
+      imageUrl: [null, []],
+      ingredients: this.fb.array([this.fb.group({amount: null, unit: '', label: ''})]),
       steps: this.fb.array([this.fb.group({step:''})])
     })
   }
@@ -42,7 +54,7 @@ export class AddRecipePage implements OnInit {
   /////// This is new /////////////////
 
   addIngredient() {
-    this.ingredients.push(this.fb.group({ingredientQuantity: null, ingredientUnit: '', ingredientName: ''}));
+    this.ingredients.push(this.fb.group({amount: null, unit: '', label: ''}));
   }
 
   deleteIngredient(index) {
@@ -64,7 +76,17 @@ export class AddRecipePage implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.productForm.value);
+    if (this.productForm.valid) {
+      const recipe = this.productForm.value;
+      recipe.steps = recipe.steps.map(step => {
+        return step.step;
+      });
+      recipe.userId = this.user.id;
+      
+      this.recipesService.addRecipe(recipe)
+        .subscribe(() => console.log('Done'));
+    }
+    return;
   }
 
   

@@ -20,8 +20,11 @@ export class RecipesService {
     return this.http.get<Recipe>('http://localhost:3000/recipes/' + recipeId);
   }
 
-  addRecipe() {
-
+  addRecipe(recipe: any) {
+    recipe.id = this.generateId();
+    // we change the url to show real pics because we don't implement image upload in the backedn
+    recipe.imageUrl = '/assets/dummy.jpg';
+    return this.http.put('http://localhost:3000/recipes/' + recipe.id, recipe);
   }
 
   updateRecipe() {
@@ -30,6 +33,11 @@ export class RecipesService {
 
   deleteRecipe() {
 
+  }
+
+  // id generator function, if we would need this in more places, we should create a public service
+  private generateId(): string {
+    return Math.random().toString(36).substr(2, 16); 
   }
 
 }
