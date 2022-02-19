@@ -7,6 +7,7 @@ export interface Recipe {
 }
 
 export interface RecipeIngredient {
+    id?: string;
     label: string;
     unit: string;
     amount: number;
