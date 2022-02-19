@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { RecipeIngredient } from 'src/app/common/interfaces/recipes';
 import { ShoppingListService } from 'src/app/common/services/shopping-list/shopping-list.service';
 
 @Component({
@@ -36,12 +37,23 @@ export class ShoppingListPopoverComponent implements OnInit {
     });
   }
 
-  get key(){
+  public get key(){
     return Object.keys(this.groupedShoppingListElements);
   }
 
-  onDeleteShoppingListValues(values: any): void {
+  public onDeleteShoppingListValues(values: any): void {
     this.shoppingListService.deleteShoppingListElements(values)
+      .subscribe();
+  }
+
+  public onAddCustomIngredient(label, unit, amount) {
+    const ingredient: RecipeIngredient = {
+      label,
+      unit,
+      amount
+    };
+
+    this.shoppingListService.addElementToShoppingList(ingredient, 'ingredients')
       .subscribe();
   }
 

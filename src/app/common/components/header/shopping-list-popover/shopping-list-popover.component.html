@@ -1,5 +1,16 @@
 <div id="shopping-list-popover">
 
+  <ion-item>
+    <ion-input type="text" placeholder="Name" #ingredientName></ion-input>
+    <ion-input type="text" placeholder="g" #ingredientMeasure></ion-input>
+    <ion-input type="number" placeholder="Quantity" #ingredientQuantity></ion-input>
+    <ion-button [disabled]="
+    !(ingredientQuantity.value !== '' && 
+    ingredientMeasure.value !== '' && 
+    ingredientName.value !== '')
+    " (click)="onAddCustomIngredient(ingredientName.value, ingredientMeasure.value, ingredientQuantity.value)">Add ingredient</ion-button>
+  </ion-item>
+
   <div *ngIf="shoppingListElements.length > 0">
     <div *ngFor="let property of key">
       <ion-item-group>
