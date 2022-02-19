@@ -1,9 +1,13 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>edit-recipe</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="ion-content-padded-top">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6" offset="3">
 
-<ion-content>
+        <h1>Edit recipe</h1>
 
+        <app-recipe-form [user]="user" [recipe]="recipe"></app-recipe-form>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

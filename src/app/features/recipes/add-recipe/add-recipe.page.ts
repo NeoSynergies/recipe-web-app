@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { User } from 'src/app/common/interfaces/user';
 import { AuthService } from 'src/app/common/services/auth/auth.service';
+import { RecipesService } from 'src/app/common/services/recipes/recipes.service';
 
 @Component({
   selector: 'app-add-recipe',
@@ -10,11 +12,23 @@ import { AuthService } from 'src/app/common/services/auth/auth.service';
 export class AddRecipePage implements OnInit {
   user: User;
   constructor(
-    private authService: AuthService
+    private authService: AuthService,
+    private recipesService: RecipesService,
+    private router: Router
   ) {}
 
   ngOnInit() {
     this.authService.user
       .subscribe(user => this.user = user);
+  }
+
+  onSubmitRecipe(event: any) {
+    console.log('EMITTED RECIPE');
+    console.log(event);
+    
+    this.recipesService.addRecipe(event)
+      .subscribe(() => {
+        this.router.navigate(['/recipes/']);
+      });
   }
 }

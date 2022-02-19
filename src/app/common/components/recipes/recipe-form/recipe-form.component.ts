@@ -1,9 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from 'src/app/common/interfaces/user';
 import { AuthService } from 'src/app/common/services/auth/auth.service';
 import { RecipesService } from 'src/app/common/services/recipes/recipes.service';
+import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-recipe-form',
@@ -14,22 +15,44 @@ export class RecipeFormComponent implements OnInit {
 
   img1;
   @Input() user: User;
-  constructor(
-    private fb: FormBuilder,
-    private recipesService: RecipesService,
-    private router: Router
-  ) { }
+  @Input() recipe: any;
+
+  @Output() submitRecipe: EventEmitter<any> = new EventEmitter();
 
   productForm: FormGroup;
 
+  constructor(
+    private fb: FormBuilder
+  ) { }
+
   ngOnInit() {
-    /* Initiate the form structure */
+
     this.productForm = this.fb.group({
       title: ['', [Validators.required]],
       imageUrl: [null, []],
       ingredients: this.fb.array([this.fb.group({amount: null, unit: '', label: ''})]),
       steps: this.fb.array([this.fb.group({step:''})])
     });
+
+    if (this.recipe) {
+      this.productForm.patchValue({
+        title: this.recipe.title,
+        imageUrl: this.recipe.imageUrl,
+        ingredients: this.recipe.ingredients,
+        steps: this.recipe.ingredients
+      });
+
+      // we set the ingredients
+      this.recipe.ingredients.map(ingredient =>  {
+        this.addIngredient(ingredient.amount, ingredient.unit, ingredient.label);
+      });
+      
+      // we set the steps
+      this.recipe.steps.map(step =>  {
+        this.addStep(step);
+      })
+    }
+
   }
 
   // STEPS 
@@ -37,8 +60,8 @@ export class RecipeFormComponent implements OnInit {
     return this.productForm.get('steps') as FormArray;
   }
 
-  addStep() {
-    this.steps.push(this.fb.group({step:''}));
+  addStep(text?) {
+    this.steps.push(this.fb.group({step: text ? text : ''}));
   }
 
   deleteStep(index) {
@@ -50,8 +73,13 @@ export class RecipeFormComponent implements OnInit {
     return this.productForm.get('ingredients') as FormArray;
   }
 
-  addIngredient() {
-    this.ingredients.push(this.fb.group({amount: null, unit: '', label: ''}));
+  addIngredient(amount?, unit?, label?) {
+    // if there are values then we fill them
+    this.ingredients.push(this.fb.group({
+      amount: amount ? amount : null,
+      unit: unit ? unit : '',
+      label: label ? label : ''
+    }));
   }
 
   deleteIngredient(index) {
@@ -79,12 +107,8 @@ export class RecipeFormComponent implements OnInit {
         return step.step;
       });
       recipe.userId = this.user.id;
-      
-      this.recipesService.addRecipe(recipe)
-        .subscribe(() => {
-          this.router.navigate(['/recipes/']);
-          this.productForm.reset();
-        });
+
+      this.submitRecipe.emit(recipe);
     }
     return;
   }

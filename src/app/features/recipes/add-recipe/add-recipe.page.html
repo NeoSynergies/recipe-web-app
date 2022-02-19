@@ -3,9 +3,9 @@
     <ion-row>
       <ion-col size="6" offset="3">
 
-        <h1>Create product</h1>
+        <h1>Create recipe</h1>
 
-        <app-recipe-form [user]="user"></app-recipe-form>
+        <app-recipe-form [user]="user" (submitRecipe)="onSubmitRecipe($event)"></app-recipe-form>
 
       </ion-col>
     </ion-row>
