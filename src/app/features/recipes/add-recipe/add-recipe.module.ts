@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { AddRecipePageRoutingModule } from './add-recipe-routing.module';
 
 import { AddRecipePage } from './add-recipe.page';
 
@@ -12,8 +11,7 @@ import { AddRecipePage } from './add-recipe.page';
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule,
-    AddRecipePageRoutingModule
+    IonicModule
   ],
   declarations: [AddRecipePage]
 })
