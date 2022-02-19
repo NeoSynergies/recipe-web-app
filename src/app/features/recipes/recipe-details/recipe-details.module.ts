@@ -6,14 +6,16 @@ import { IonicModule } from '@ionic/angular';
 
 import { RecipeDetailsPage } from './recipe-details.page';
 import { RecipeDetailsPageRoutingModule } from './recipe-details-routing.module';
+import { AddToShoppingListComponent } from 'src/app/common/components/add-to-shopping-list/add-to-shopping-list.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    RecipeDetailsPageRoutingModule
+    RecipeDetailsPageRoutingModule,
+    
   ],
-  declarations: [RecipeDetailsPage]
+  declarations: [RecipeDetailsPage, AddToShoppingListComponent]
 })
 export class RecipeDetailsPageModule {}

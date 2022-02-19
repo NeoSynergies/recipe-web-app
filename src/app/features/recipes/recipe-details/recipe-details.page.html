@@ -11,15 +11,20 @@
           <h2 class="recipe-title">{{ recipe.title }}</h2>
           <h4>Ingredients</h4>
           <ul>
-            <li *ngFor="let ingredient of recipe.ingredients">{{ ingredient.amount }} {{ ingredient.unit }} of {{ ingredient.label }}</li>
+            <li *ngFor="let ingredient of recipe.ingredients">
+              <div>
+                {{ ingredient.amount }} {{ ingredient.unit }} of {{ ingredient.label }} <app-add-to-shopping-list [valueToAdd]="ingredient" typeOfValue="ingredient"></app-add-to-shopping-list>
+              </div>
+            </li>
           </ul>
   
           <h4>How to cook</h4>
           <ol>
-            <li *ngFor="let step of recipe.steps">{{ step }}</li>
+            <li *ngFor="let step of recipe.steps">
+              {{ step }} 
+            </li>
           </ol>
         </div>
-  
       </ion-col>
     </ion-row>
   </ion-grid>
