@@ -1,0 +1,62 @@
+<form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+
+
+  <div class="image-item">
+    <img [src]="img1" alt="">
+  </div>
+  <ion-item class="margin-top-element">
+    <ion-input accept="image/*" (change)="onFileChange($event)" formControlName="imageUrl" type="file" placeholder="Title of the recipe"></ion-input>
+  </ion-item>
+  
+
+  <ion-item class="margin-top-element">
+    <ion-input formControlName="title" type="text" placeholder="Title of the recipe"></ion-input>
+  </ion-item>
+
+  <div class="title-with-button">
+    <h3>Steps</h3>
+    <ion-button fill="clear" (click)="addStep()">
+      <ion-icon name="add-outline" slot="start"></ion-icon>
+      Add step
+    </ion-button>
+  </div>
+
+  <div formArrayName="steps">
+    <ol>
+      <div *ngFor="let item of steps.controls; let stepIndex=index" [formGroupName]="stepIndex">
+        <li class="dynamic-li">
+          <ion-item>
+            <ion-textarea autoGrow="true" formControlName="step" placeholder="Write this step..."></ion-textarea>
+            <ion-button color="danger" (click)="deleteStep(stepIndex)">Delete step</ion-button>
+          </ion-item>
+        </li>
+      </div>
+    </ol>
+  </div>
+
+  <div class="title-with-button">
+    <h3>Ingredients</h3>
+    <ion-button fill="clear" (click)="addIngredient()">
+      <ion-icon name="add-outline" slot="start"></ion-icon>
+      Add ingredient
+    </ion-button>
+  </div>
+
+  <div formArrayName="ingredients">
+    <ul>
+      <div *ngFor="let item of ingredients.controls; let ingredientIndex=index" [formGroupName]="ingredientIndex">
+        <li class="dynamic-li">
+          <ion-item>
+            <ion-input type="text" placeholder="Name" formControlName="label"></ion-input>
+            <ion-input type="text" placeholder="g" formControlName="unit"></ion-input>
+            <ion-input type="number" placeholder="Quantity" formControlName="amount"></ion-input>
+            <ion-button color="danger" (click)="deleteIngredient(ingredientIndex)">Delete ingredient</ion-button>
+          </ion-item>
+        </li>
+      </div>
+    </ul>
+
+  </div>
+
+  <ion-button type="submit" [disabled]="!productForm.valid">Enviar</ion-button>
+</form>

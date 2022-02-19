@@ -26,8 +26,13 @@
           </ol>
 
           <ion-button *ngIf="user.id === recipe.userId" expand="block" fill="clear" color="danger" (click)="onDeleteRecipe()">
-            <ion-icon name="add-outline" slot="start"></ion-icon>
+            <ion-icon name="trash-outline" slot="start"></ion-icon>
             Delete a recipe
+          </ion-button>
+
+          <ion-button *ngIf="user.id === recipe.userId" expand="block" fill="clear" color="warning" (click)="onEditRecipe()">
+            <ion-icon name="pencil-outline" slot="start"></ion-icon>
+            Edit the recipe
           </ion-button>
         </div>
       </ion-col>

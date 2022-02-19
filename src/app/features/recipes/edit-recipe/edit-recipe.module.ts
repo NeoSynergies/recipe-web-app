@@ -5,12 +5,15 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { EditRecipePage } from './edit-recipe.page';
+import { RecipeFormComponent } from 'src/app/common/components/recipes/recipe-form/recipe-form.component';
+import { RecipeFormModule } from 'src/app/common/components/recipes/recipe-form/recipe-form.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule
+    IonicModule,
+    RecipeFormModule
   ],
   declarations: [EditRecipePage]
 })

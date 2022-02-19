@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
 import { Recipe } from 'src/app/common/interfaces/recipes';
 import { User } from 'src/app/common/interfaces/user';
 import { AuthService } from 'src/app/common/services/auth/auth.service';
@@ -25,14 +25,13 @@ export class RecipeDetailsPage implements OnInit {
   // in a bigger app we wouldn't get a the recipes with all the data because it would be useless as we just show some properties, not all the object
   ngOnInit() {
     this.authService.user
-      .subscribe(user => {
-        this.user = user;
-      });
-
-    this.route.params
       .pipe(
+        tap(user => this.user = user), // we set the user
+        switchMap(() => {
+          return this.route.params; // we get the params
+        }),
         switchMap((params) => {
-          return this.recipesService.getOneRecipe(params.recipeId);
+          return this.recipesService.getOneRecipe(params.recipeId); // we get the recipe
         })
       )
       .subscribe((recipe: Recipe) => this.recipe = recipe);
@@ -43,6 +42,14 @@ export class RecipeDetailsPage implements OnInit {
       .subscribe(() => {
         this.router.navigate(['/recipes/']);
       });
+  }
+
+  onEditRecipe() {
+    this.router.navigate(['/recipes/edit-recipe'], {
+      state: {
+        recipe: this.recipe
+      }
+    });
   }
 
 }

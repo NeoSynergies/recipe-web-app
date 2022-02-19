@@ -7,6 +7,8 @@ import { IonicModule } from '@ionic/angular';
 
 import { AddRecipePage } from './add-recipe.page';
 import { AddRecipePageRoutingModule } from './add-recipe-routing.module';
+import { RecipeFormComponent } from 'src/app/common/components/recipes/recipe-form/recipe-form.component';
+import { RecipeFormModule } from 'src/app/common/components/recipes/recipe-form/recipe-form.module';
 
 @NgModule({
   imports: [
@@ -14,7 +16,8 @@ import { AddRecipePageRoutingModule } from './add-recipe-routing.module';
     FormsModule,
     IonicModule,
     AddRecipePageRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RecipeFormModule
   ],
   declarations: [AddRecipePage]
 })
