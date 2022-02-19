@@ -8,6 +8,7 @@
         <ion-button>Recipes</ion-button>
         <ion-button>Global search archive</ion-button>
         <ion-button>
+          <ion-badge *ngIf="shoppingListElements.length !== 0 || null" slot="start">{{ shoppingListElements.length }}</ion-badge>
           <ion-icon slot="icon-only" name="cart-outline"></ion-icon>
         </ion-button>
       </ion-buttons>

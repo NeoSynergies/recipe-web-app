@@ -7,7 +7,7 @@ import { catchError, tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class ShoppingListService {
-  shoppingListElements: BehaviorSubject<any> = new BehaviorSubject({});
+  shoppingListElements: BehaviorSubject<any> = new BehaviorSubject([]);
 
   constructor(
     private http: HttpClient
@@ -16,12 +16,15 @@ export class ShoppingListService {
   addValueToShoppingList(values: any, category: string): Observable<any> {
     // we assign the id if the element have it and if not we generate one
     let valueId: any = values.id ? values.id : this.generateId();
+    values.id = valueId;
     return this.http.put('http://localhost:3000/' + category + '/' + valueId, {
       [valueId]: values
     })
       .pipe(
         tap(
-          (values) => this.shoppingListElements.next({...this.shoppingListElements.getValue(), [valueId]: values[valueId]}),
+          (values) => {
+            this.shoppingListElements.next([...this.shoppingListElements.getValue(), values[valueId]])
+          },
           (err) => {
             console.log('El error');
             console.log(err);
@@ -30,6 +33,7 @@ export class ShoppingListService {
         )
       );
   }
+
 
   /*updateShoppingListProducts(): Observable<string> {
 
