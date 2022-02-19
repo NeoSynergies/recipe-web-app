@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Recipe } from 'src/app/common/interfaces/recipes';
+import { RecipesService } from 'src/app/common/services/recipes/recipes.service';
 
 @Component({
   selector: 'app-recipes-list',
@@ -6,10 +8,24 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./recipes-list.page.scss'],
 })
 export class RecipesListPage implements OnInit {
-
-  constructor() { }
+  recipes: Recipe[];
+  constructor(
+    private recipesService: RecipesService
+  ) { }
 
   ngOnInit() {
+    this.getAllRecipes();
+  }
+
+  private getAllRecipes() {
+    this.recipesService.getAllRecipes()
+      .subscribe((recipes: Recipe[]) => {
+        this.recipes = recipes;
+      });
+  }
+
+  onSeeRecipeDetails(recipeId: string) {
+    
   }
 
 }

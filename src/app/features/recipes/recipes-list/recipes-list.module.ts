@@ -8,6 +8,7 @@ import { RecipesListPageRoutingModule } from './recipes-list-routing.module';
 
 import { RecipesListPage } from './recipes-list.page';
 
+
 @NgModule({
   imports: [
     CommonModule,
