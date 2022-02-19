@@ -15,6 +15,13 @@ export class ShoppingListService {
     this.getShoppingListIngredients();
   }
 
+
+  // get the ingredients and put them on the shopping list behavior subject
+  getShoppingListIngredients(): void {
+    this.http.get('http://localhost:3000/ingredients')
+      .subscribe((ingredients) => this.shoppingListElements.next(ingredients));
+  }
+
   addElementToShoppingList(values: any, category: string): Observable<any> {
     // we assign the id if the element have it and if not we generate one
     let valueId: any = values.id ? values.id : this.generateId();
@@ -44,22 +51,6 @@ export class ShoppingListService {
         })
       );
   }
-
-  getShoppingListIngredients() {
-    this.http.get('http://localhost:3000/ingredients')
-      .subscribe((ingredients) => {
-        console.log('loososs');
-        
-        console.log(ingredients);
-        this.shoppingListElements.next(ingredients);
-      });
-  }
-
-
-  /*updateShoppingListProducts(): Observable<string> {
-
-  }*/
-
 
   // id generator function, if we would need this in more places, we should create a public service
   private generateId(): string {
