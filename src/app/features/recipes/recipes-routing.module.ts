@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from 'src/app/common/guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -13,7 +14,8 @@ const routes: Routes = [
   },
   {
     path: 'add-recipe',
-    loadChildren: () => import('./add-recipe/add-recipe.module').then( m => m.AddRecipePageModule)
+    loadChildren: () => import('./add-recipe/add-recipe.module').then( m => m.AddRecipePageModule),
+    canLoad: [AuthGuard]
   },
   {
     path: 'edit-recipe',

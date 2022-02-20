@@ -10,6 +10,7 @@ import { ErrorHandlingService } from '../error/error-handling.service';
 })
 export class AuthService {
   user: BehaviorSubject<any> = new BehaviorSubject(null);
+  userIsAuthenticated: boolean = false;
 
   constructor(
     private http: HttpClient,
@@ -17,11 +18,20 @@ export class AuthService {
   ) { }
 
   getUser() {
-    this.http.get('http://localhost:3000/users/aijsndiusad')
+    this.http.get('http://localhost:3000/users/aijsndiusads')
       .pipe(
         catchError(() => this.errorHandlingService.returnErrorAndShowModal('We couldn\'t load the user')),
         map(user => Object.keys(user).length === 0 ? null : user)
       )
-      .subscribe((user: User) => this.user.next(user));
+      .subscribe((user: User) => {
+        if (user) {
+          this.user.next(user);
+          this.userIsAuthenticated = true;
+        } else {
+          this.userIsAuthenticated = false;
+        }
+      });
   }
+
+  getIfUserIsAuthenticated(): boolean {return this.userIsAuthenticated}
 }
