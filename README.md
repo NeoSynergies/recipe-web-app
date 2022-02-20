@@ -15,7 +15,7 @@ If you want to test the authentication:
 
 Some considerations:
 
-    - The only thing changed in the backend is that I added the CORS package
+    - The only thing changed in the backend is that I added the CORS package. I fixed some typing errors.
 
     - The project is developed under the condition of not editing the REST (because I didn't know that I could change it)
         so some things are not done in the best way. For example, the ZIP (rxjs) done for the search functionality
