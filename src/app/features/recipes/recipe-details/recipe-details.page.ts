@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { switchMap, tap } from 'rxjs/operators';
+import { delay, switchMap, tap } from 'rxjs/operators';
 import { Recipe } from 'src/app/common/interfaces/recipes';
 import { User } from 'src/app/common/interfaces/user';
 import { AuthService } from 'src/app/common/services/auth/auth.service';
@@ -14,6 +14,8 @@ import { RecipesService } from 'src/app/common/services/recipes/recipes.service'
 export class RecipeDetailsPage implements OnInit {
   user: User;
   recipe: Recipe;
+  loading: boolean = false;
+
   constructor(
     private route: ActivatedRoute,
     private recipesService: RecipesService,
@@ -24,8 +26,10 @@ export class RecipeDetailsPage implements OnInit {
   // geting here again one recipe is redundant because we got them in the recipes list, but
   // in a bigger app we wouldn't get a the recipes with all the data because it would be useless as we just show some properties, not all the object
   ngOnInit() {
+    this.loading = true;
     this.authService.user
       .pipe(
+        delay(1000),
         tap(user => this.user = user), // we set the user
         switchMap(() => {
           return this.route.params; // we get the params
@@ -34,7 +38,7 @@ export class RecipeDetailsPage implements OnInit {
           return this.recipesService.getOneRecipe(params.recipeId); // we get the recipe
         })
       )
-      .subscribe((recipe: Recipe) => this.recipe = recipe);
+      .subscribe((recipe: Recipe) => {this.recipe = recipe; this.loading = false;});
   }
 
   onDeleteRecipe() {

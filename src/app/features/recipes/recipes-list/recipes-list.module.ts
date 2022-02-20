@@ -9,6 +9,7 @@ import { RecipesListPageRoutingModule } from './recipes-list-routing.module';
 import { RecipesListPage } from './recipes-list.page';
 import { RouterModule } from '@angular/router';
 import { RecipeModule } from 'src/app/common/components/boxes/recipe/recipe.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { RecipeModule } from 'src/app/common/components/boxes/recipe/recipe.modu
     IonicModule,
     RecipesListPageRoutingModule,
     RouterModule,
-    RecipeModule
+    RecipeModule,
+    SharedModule
   ],
   declarations: [RecipesListPage]
 })

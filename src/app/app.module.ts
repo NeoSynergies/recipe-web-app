@@ -8,7 +8,6 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
 import { HttpClientModule } from '@angular/common/http';
-import { HeaderComponent } from './common/components/header/header.component';
 import { HeaderModule } from './common/components/header/header.module';
 
 @NgModule({

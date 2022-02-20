@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { delay } from 'rxjs/operators';
 import { Recipe } from 'src/app/common/interfaces/recipes';
 import { RecipesService } from 'src/app/common/services/recipes/recipes.service';
 
@@ -9,6 +10,8 @@ import { RecipesService } from 'src/app/common/services/recipes/recipes.service'
 })
 export class RecipesListPage {
   recipes: Recipe[];
+  loading: boolean = false;
+
   constructor(
     private recipesService: RecipesService
   ) { }
@@ -18,9 +21,12 @@ export class RecipesListPage {
   }
 
   private getAllRecipes() {
+    this.loading = true;
     this.recipesService.getAllRecipes()
+      .pipe(delay(1000))
       .subscribe((recipes: Recipe[]) => {
         this.recipes = recipes;
+        this.loading = false;
       });
   }
 

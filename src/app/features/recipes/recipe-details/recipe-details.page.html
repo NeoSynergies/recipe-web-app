@@ -2,8 +2,10 @@
   <ion-grid>
     <ion-row>
       <ion-col size="6" offset="3">
-  
-        <div class="recipe-details" *ngIf="recipe">
+        
+        <app-loading-spinner *ngIf="loading"></app-loading-spinner>
+
+        <div class="recipe-details" *ngIf="recipe && !loading">
           <div class="recipe-image">
             <img [src]="'http://localhost:3000' + recipe.imageUrl" alt="">
           </div>

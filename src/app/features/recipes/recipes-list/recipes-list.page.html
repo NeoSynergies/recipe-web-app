@@ -9,7 +9,11 @@
           Add a recipe
         </ion-button>
         <br>
-        <app-recipe *ngFor="let recipe of recipes" [routerLink]="'/recipes/recipe/' + recipe.id" [recipe]="recipe"></app-recipe>
+
+        <div *ngIf="recipes && !loading">
+          <app-recipe *ngFor="let recipe of recipes" [routerLink]="'/recipes/recipe/' + recipe.id" [recipe]="recipe"></app-recipe>
+        </div>
+        <app-loading-spinner *ngIf="loading"></app-loading-spinner>
 
       </ion-col>
     </ion-row>

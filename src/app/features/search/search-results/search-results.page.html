@@ -6,7 +6,9 @@
 
         <h3>Search results of "{{ searchTerm }}"</h3>
 
-        <div *ngIf="filteredResults">
+        <app-loading-spinner *ngIf="loading"></app-loading-spinner>
+
+        <div *ngIf="filteredResults && !loading">
 
           <div *ngIf="filteredResults.ingredients.length > 0">
             <h3>Ingredients</h3>

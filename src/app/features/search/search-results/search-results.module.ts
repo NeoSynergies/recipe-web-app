@@ -8,6 +8,7 @@ import { SearchResultsPageRoutingModule } from './search-results-routing.module'
 
 import { SearchResultsPage } from './search-results.page';
 import { RecipeModule } from 'src/app/common/components/boxes/recipe/recipe.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { RecipeModule } from 'src/app/common/components/boxes/recipe/recipe.modu
     FormsModule,
     IonicModule,
     SearchResultsPageRoutingModule,
-    RecipeModule
+    RecipeModule,
+    SharedModule
   ],
   declarations: [SearchResultsPage]
 })
