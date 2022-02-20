@@ -23,7 +23,7 @@ export class AddRecipePage implements OnInit {
   }
 
   onSubmitRecipe(event: any) {
-    this.recipesService.addRecipe(event)
+    this.recipesService.addOrUpdateRecipe(event)
       .subscribe(() => {
         this.router.navigate(['/recipes/']);
       });

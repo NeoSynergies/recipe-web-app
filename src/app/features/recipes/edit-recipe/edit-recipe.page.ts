@@ -26,12 +26,8 @@ export class EditRecipePage implements OnInit {
       });
   }
 
-  onSubmitRecipe(event: any) {
-
-    console.log('THE FORM IN EDIT RECIPE');
-    console.log(event);
-
-    this.recipesService.updateRecipe(event)
+  onSubmitRecipe(event: any): void {
+    this.recipesService.addOrUpdateRecipe(event)
       .subscribe(() => {
         this.router.navigate(['/recipes/']);
       });

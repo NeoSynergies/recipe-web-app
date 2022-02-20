@@ -16,7 +16,7 @@ export class AuthService {
   ) { }
 
   getUser() {
-    this.http.get('http://localhost:3000/users/aijsndiusad')
+    this.http.get('http://localhost:3000/users/aijsndiusads')
       .pipe(
         map(user => Object.keys(user).length === 0 ? null : user)
       )

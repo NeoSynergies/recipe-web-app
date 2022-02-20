@@ -47,6 +47,6 @@ export class HeaderComponent implements OnInit {
   }
 
   onRedirectToSearch(event) {
-    this.router.navigate(['/search/'+event]);
+    this.router.navigate(['/search/' + event]);
   }
 }

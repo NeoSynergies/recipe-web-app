@@ -29,8 +29,8 @@ export class RecipesService {
       );
   }
 
-  addRecipe(recipe: any): Observable<any> {
-    if (!recipe.id) recipe.id = this.generateId();
+  addOrUpdateRecipe(recipe: any): Observable<any> {
+    if (!recipe.id) recipe.id = this.generateId(); // if the recipe doesn't have an id we create it
     // we change the url to show real pics because we don't implement image upload in the backedn
     recipe.imageUrl = '/assets/dummy.jpg';
     return this.http.put('http://localhost:3000/recipes/' + recipe.id, recipe)  
@@ -39,20 +39,8 @@ export class RecipesService {
       );
   }
 
-  updateRecipe(recipe: any): Observable<any> {
-    // we delete the recipe
-    return this.http.delete('http://localhost:3000/recipes/' + recipe.id)
-      .pipe(
-        catchError(() => this.errorHandlingService.returnErrorAndShowModal('There was an error updating the recipe')),
-        switchMap(() => {
-          // we add it again
-          return this.addRecipe(recipe)
-        })
-      );
-  }
-
   deleteRecipe(recipeId): Observable<any> {
-    return this.http.delete<any>('http://localhost:3000/recipes/' + recipeId)
+    return this.http.delete('http://localhost:3000/recipes/' + recipeId)
       .pipe(
         catchError(() => this.errorHandlingService.returnErrorAndShowModal('There was an error deleting the recipe')),
       );

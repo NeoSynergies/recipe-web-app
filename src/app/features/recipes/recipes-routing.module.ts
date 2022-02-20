@@ -19,7 +19,8 @@ const routes: Routes = [
   },
   {
     path: 'edit-recipe',
-    loadChildren: () => import('./edit-recipe/edit-recipe.module').then( m => m.EditRecipePageModule)
+    loadChildren: () => import('./edit-recipe/edit-recipe.module').then( m => m.EditRecipePageModule),
+    canLoad: [AuthGuard]
   },
   {
     path: 'recipe/:recipeId',
