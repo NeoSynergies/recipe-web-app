@@ -22,6 +22,8 @@ export class ShoppingListPopoverComponent implements OnInit {
 
         // we reset the array everytime we get new elements
         this.groupedShoppingListElements = [];
+
+        // we group elements by category
         this.groupElements();
       });
   }
@@ -37,6 +39,7 @@ export class ShoppingListPopoverComponent implements OnInit {
     });
   }
 
+  // this is to dynamically iterate to all groupedShoppingListElements properties in the html
   public get key(){
     return Object.keys(this.groupedShoppingListElements);
   }
@@ -47,6 +50,7 @@ export class ShoppingListPopoverComponent implements OnInit {
   }
 
   public onAddCustomIngredient(label, unit, amount) {
+    // we create the recipe ingredient (the id is created in the service)
     const ingredient: RecipeIngredient = {
       label,
       unit,

@@ -29,7 +29,7 @@ export class RecipeDetailsPage implements OnInit {
     this.loading = true;
     this.authService.user
       .pipe(
-        delay(500),
+        delay(500), // we simulate a real backend request delay
         tap(user => this.user = user), // we set the user
         switchMap(() => {
           return this.route.params; // we get the params
@@ -49,6 +49,7 @@ export class RecipeDetailsPage implements OnInit {
   }
 
   onEditRecipe() {
+    // we navigate to the edit-recipe page and send the recipe as an internal parameter
     this.router.navigate(['/recipes/edit-recipe'], {
       state: {
         recipe: this.recipe

@@ -18,7 +18,7 @@ export class AddToShoppingListComponent implements OnInit {
 
   onAddToShoppingList(): void {
     this.shoppingListService.addElementToShoppingList(this.values, this.valuesCategory)
-      .subscribe(result => console.log(this.valuesCategory + ' added to shopping list'));
+      .subscribe();
   }
 
 }

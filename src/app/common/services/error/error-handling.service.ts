@@ -11,9 +11,9 @@ export class ErrorHandlingService {
     private alertCtrl: AlertController
   ) { }
  
-  returnErrorAndShowModal(message?: string): Observable<any> {
+  returnErrorAndShowModal(message?: string): Observable<any> { 
     this.showErrorModal(message);
-    return of([]);
+    return of([]); // we return an observable because we use it in pipes of another observables
   }
 
   private async showErrorModal(message?: string) {

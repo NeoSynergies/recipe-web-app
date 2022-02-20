@@ -1,8 +1,7 @@
 <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
 
-
   <div class="image-item">
-    <img [src]="img1" alt="">
+    <img [src]="imagePreview" alt="">
   </div>
   <ion-item class="margin-top-element">
     <ion-input accept="image/*" (change)="onFileChange($event)" formControlName="imageUrl" type="file" placeholder="Title of the recipe"></ion-input>
@@ -15,7 +14,7 @@
 
   <div class="title-with-button">
     <h3>Ingredients</h3>
-    <ion-button fill="clear" (click)="addIngredient()">
+    <ion-button fill="clear" (click)="onAddIngredient()">
       <ion-icon name="add-outline" slot="start"></ion-icon>
       Add ingredient
     </ion-button>
@@ -29,7 +28,7 @@
             <ion-input type="text" placeholder="Name" formControlName="label"></ion-input>
             <ion-input type="text" placeholder="g" formControlName="unit"></ion-input>
             <ion-input type="number" placeholder="Quantity" formControlName="amount"></ion-input>
-            <ion-button color="danger" (click)="deleteIngredient(ingredientIndex)">Delete ingredient</ion-button>
+            <ion-button color="danger" (click)="onDeleteIngredient(ingredientIndex)">Delete ingredient</ion-button>
           </ion-item>
         </li>
       </div>
@@ -39,7 +38,7 @@
 
   <div class="title-with-button">
     <h3>Steps</h3>
-    <ion-button fill="clear" (click)="addStep()">
+    <ion-button fill="clear" (click)="onAddStep()">
       <ion-icon name="add-outline" slot="start"></ion-icon>
       Add step
     </ion-button>
@@ -51,7 +50,7 @@
         <li class="dynamic-li">
           <ion-item>
             <ion-textarea autoGrow="true" formControlName="step" placeholder="Write this step..."></ion-textarea>
-            <ion-button color="danger" (click)="deleteStep(stepIndex)">Delete step</ion-button>
+            <ion-button color="danger" (click)="onDeleteStep(stepIndex)">Delete step</ion-button>
           </ion-item>
         </li>
       </div>

@@ -15,18 +15,16 @@ export class AuthService {
     private http: HttpClient
   ) { }
 
-  getUser() {
-    this.http.get('http://localhost:3000/users/aijsndiusads')
+  getUser(): void {
+    this.http.get('http://localhost:3000/users/aijsndiusad')
       .pipe(
-        map(user => Object.keys(user).length === 0 ? null : user)
+        map(user => Object.keys(user).length === 0 ? null : user) // we return null if the user doesn't have properties
       )
       .subscribe((user: User) => {
-        if (user) {
+        if (user) { // if there is an user
           this.user.next(user);
           this.userIsAuthenticated = true;
-        } else {
-          this.userIsAuthenticated = false;
-        }
+        } else this.userIsAuthenticated = false;
       });
   }
 

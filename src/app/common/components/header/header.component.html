@@ -10,8 +10,8 @@
 
         <ion-button [routerLink]="['/' + 'recipes']">Recipes</ion-button>
 
-        <ion-button *ngIf="user" (click)="onOpenShoppingList($event, shoppingListElements)">
-          <ion-badge *ngIf="shoppingListElements.length !== 0" slot="start">{{ shoppingListElements.length }}</ion-badge>
+        <ion-button *ngIf="user" (click)="onOpenShoppingList($event)">
+          <ion-badge *ngIf="shoppingListElementsLength !== 0" slot="start">{{ shoppingListElementsLength }}</ion-badge>
           <ion-icon slot="icon-only" name="cart-outline"></ion-icon>
         </ion-button>
 

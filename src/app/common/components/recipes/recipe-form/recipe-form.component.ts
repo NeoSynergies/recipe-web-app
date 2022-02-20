@@ -13,7 +13,7 @@ import { EventEmitter } from '@angular/core';
 })
 export class RecipeFormComponent implements OnInit {
 
-  img1;
+  imagePreview;
   @Input() user: User;
   @Input() recipe: any;
 
@@ -35,15 +35,16 @@ export class RecipeFormComponent implements OnInit {
     });
 
     if (this.recipe) {
-
+      // if this form is for editing the recipe we will get the recipe as a @Input and assign the values here 
+      
       // we set the ingredients
       this.recipe.ingredients.map(ingredient =>  {
-        this.addIngredient(ingredient.amount, ingredient.unit, ingredient.label);
+        this.onAddIngredient(ingredient.amount, ingredient.unit, ingredient.label);
       });
       
       // we set the steps
       this.recipe.steps.map(step =>  {
-        this.addStep(step);
+        this.onAddStep(step);
       });
     }
 
@@ -54,11 +55,11 @@ export class RecipeFormComponent implements OnInit {
     return this.productForm.get('steps') as FormArray;
   }
 
-  addStep(text?) {
+  onAddStep(text?) {
     this.steps.push(this.fb.group({step: text ? text : ''}));
   }
 
-  deleteStep(index) {
+  onDeleteStep(index) {
     this.steps.removeAt(index);
   }
 
@@ -67,7 +68,7 @@ export class RecipeFormComponent implements OnInit {
     return this.productForm.get('ingredients') as FormArray;
   }
 
-  addIngredient(amount?, unit?, label?) {
+  onAddIngredient(amount?, unit?, label?) {
     // if there are values then we fill them
     this.ingredients.push(this.fb.group({
       amount: amount ? amount : null,
@@ -76,7 +77,7 @@ export class RecipeFormComponent implements OnInit {
     }));
   }
 
-  deleteIngredient(index) {
+  onDeleteIngredient(index) {
     this.ingredients.removeAt(index);
   }
 
@@ -85,7 +86,7 @@ export class RecipeFormComponent implements OnInit {
     if (event.target.files && event.target.files[0]) {
       const reader = new FileReader();
       reader.onload = (event:any) => {
-        this.img1 = event.target.result;
+        this.imagePreview = event.target.result;
       }
       reader.readAsDataURL(event.target.files[0]);  // to trigger onload
     }

@@ -32,22 +32,24 @@ export class ShoppingListService{
       .subscribe((ingredients: any) => this.shoppingListElements.next(ingredients.ingredients || []));
   }
 
-  getUserIngredients(): Observable<RecipeIngredient[]> {
+  public getUserIngredients(): Observable<RecipeIngredient[]> {
     return this.http.get<RecipeIngredient[]>('http://localhost:3000/ingredients/' + this.user.id)
       .pipe(
         catchError(() => this.errorHandlingService.returnErrorAndShowModal('There was an error getting user ingredients'))
       );
   }
 
-  // WE WILL substitute the whole USER object because I don't know if i can create new endpoints
-  addElementToShoppingList(values: any, category: string): Observable<any> {
-    values = {
+  // WE WILL substitute the whole USER object because I didn't knew if i could create new endpoints
+  public addElementToShoppingList(values: any, category: string): Observable<any> {
+    // we create a new ingredient
+    const newIngredient = {
       id: values.id ? values.id : this.generateId(), // we assign the id if the element have it and if not we generate one
       category: category,
       ...values,
     };
 
-    const ingredients = [...this.shoppingListElements.getValue(), values];
+    // we generate another array with the current shoppingListElements and the new ingredient
+    const ingredients = [...this.shoppingListElements.getValue(), newIngredient];
 
     // update local ingredients
     this.shoppingListElements.next(ingredients);
@@ -60,7 +62,8 @@ export class ShoppingListService{
     return this.replaceDbIngredients(dbObjectToReplace);
   }
 
-  deleteShoppingListElements(values: any): Observable<any> {
+  public deleteShoppingListElements(values: any): Observable<any> {
+    // we remove the ingredient from the shoppingListElements value
     const ingredients = this.shoppingListElements.getValue().filter(ingredient => ingredient.id !== values.id);
 
     // update local ingredients
@@ -74,7 +77,7 @@ export class ShoppingListService{
     return this.replaceDbIngredients(dbObjectToReplace);
   }
 
-  replaceDbIngredients(object): Observable<any> {
+  private replaceDbIngredients(object): Observable<any> {
     // we replace the server shopping list
     return this.http.put('http://localhost:3000/ingredients/'+ this.user.id, object)
       .pipe(

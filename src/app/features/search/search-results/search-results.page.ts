@@ -26,14 +26,13 @@ export class SearchResultsPage implements OnInit {
       });
   }
 
-  // typically you would
   onSearch(event) {
     this.loading = true;
     const term = event.replace(/[^A-Za-z0-9\s!?]/g,'').toLowerCase();
 
     // if there are no items for that search it will open the error alert but that won't happen with a real backend
     return this.searchService.globalSearch(term)
-      .pipe(delay(500))
+      .pipe(delay(500)) // we simulate a real backend request delay
       .subscribe(result => {
         this.filteredResults = result;
         this.loading = false;

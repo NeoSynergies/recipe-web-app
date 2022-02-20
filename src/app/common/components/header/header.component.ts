@@ -15,7 +15,7 @@ import { ShoppingListPopoverComponent } from './shopping-list-popover/shopping-l
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  shoppingListElements = [];
+  shoppingListElementsLength = 0;
   user: User;
 
   constructor(
@@ -29,14 +29,12 @@ export class HeaderComponent implements OnInit {
     this.authService.user
       .pipe(
         tap(user => this.user = user),
-        switchMap(() => this.shoppingListService.shoppingListElements),
+        switchMap(() => this.shoppingListService.shoppingListElements), // we get the shoppingListElements
       )
-      .subscribe(elements => {
-        this.shoppingListElements = elements || [];
-      });
+      .subscribe(elements => this.shoppingListElementsLength = elements.length || 0); // we need the length to show it in the shoppingList button
   }
 
-  async onOpenShoppingList(ev, shoppingListElements) {
+  async onOpenShoppingList(ev) {
     const popover = await this.popoverController.create({
       component: ShoppingListPopoverComponent,
       event: ev,
@@ -46,7 +44,7 @@ export class HeaderComponent implements OnInit {
     return await popover.present();
   }
 
-  onRedirectToSearch(event) {
-    this.router.navigate(['/search/' + event]);
+  onRedirectToSearch(searchTerm: string) {
+    this.router.navigate(['/search/' + searchTerm]);
   }
 }

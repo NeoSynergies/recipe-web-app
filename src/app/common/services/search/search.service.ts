@@ -23,14 +23,17 @@ export class SearchService {
     return zip(this.shoppingListService.shoppingListElements, this.recipesService.getAllRecipes())
       .pipe(
         catchError(() => this.errorHandlingService.returnErrorAndShowModal('There was an error searching')),
-        map((result) => {
+        map((result: any) => {
+
           // we filter the ingredients and recipes by the term
-          const ingredients = result[0].filter(element => this.regexString(element.label).includes(term));
-          const recipes = result[1].filter(element => this.regexString(element.title).includes(term));
+          const ingredients = result[0].filter((element: any) => this.regexString(element.label).includes(term));
+          const recipes = result[1].filter((element: any) => this.regexString(element.title).includes(term));
 
-          const thereAreResults = ingredients.length > 0 || recipes.length > 0; // we check if there are results
+          // we check if there are results in the inner arrays
+          const thereAreResults = ingredients.length > 0 || recipes.length > 0;
 
-          const filteredResults = { // we create the object to return
+          // we create the object to return
+          const filteredResults = { 
             ingredients,
             recipes,
             thereAreResults

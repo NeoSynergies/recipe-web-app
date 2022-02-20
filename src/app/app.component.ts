@@ -10,6 +10,7 @@ export class AppComponent implements OnInit {
   constructor(private authService: AuthService) {}
 
   ngOnInit() {
+    // we simulate that we login
     this.authService.getUser();
   }
 }

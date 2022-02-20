@@ -13,8 +13,13 @@ export class SearchbarComponent {
   constructor() { }
 
   onSearch(term) {
+    // reset the searchbar value
     this.searchbar.value = "";
+
+    // if there is no search term we return
     if (term == '') return;
+
+    // we emit the search term to the header
     this.search.emit(term);
   }
 
