@@ -32,7 +32,6 @@ export class HeaderComponent implements OnInit {
         switchMap(() => this.shoppingListService.shoppingListElements),
       )
       .subscribe(elements => {
-        console.log(this.user);
         this.shoppingListElements = elements
       });
   }

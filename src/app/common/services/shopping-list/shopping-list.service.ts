@@ -20,11 +20,9 @@ export class ShoppingListService{
   ) {
     this.authService.user
       .subscribe(user => {
-        // just execute the getShopping function when there is the user object
-        if (Object.keys(user).length !== 0) {
+        if (user) { // just execute the getShopping function when there is the user object
           this.user = user;
-          // spread operator here prevents same instance problems when pushing values
-          this.shoppingListElements.next([...user.ingredients]);
+          this.shoppingListElements.next([...user.ingredients]); // spread operator here prevents same instance problems when pushing values
         }
       });
   }
@@ -50,14 +48,7 @@ export class ShoppingListService{
     return this.http.put('http://localhost:3000/users/'+ this.user.id, this.user)
       .pipe(
         catchError(() => this.errorHandlingService.returnErrorAndShowModal('There was an error with the server')),
-        tap(
-          () => this.shoppingListElements.next(this.user.ingredients),
-          (err) => {
-            console.log('El error');
-            console.log(err);
-            // ERROR HANDLING
-          }
-        )
+        tap(() => this.shoppingListElements.next(this.user.ingredients))
       );
   }
 

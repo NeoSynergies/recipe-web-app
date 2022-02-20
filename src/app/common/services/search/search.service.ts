@@ -20,12 +20,7 @@ export class SearchService {
     return zip(this.shoppingListService.shoppingListElements, this.recipesService.getAllRecipes())
       .pipe(
         catchError(() => this.errorHandlingService.returnErrorAndShowModal('There was an error searching')),
-        map((result) => {
-          return {
-            ingredients: result[0],
-            recipes: result[1]
-          }
-        })
+        map((result) => {return { ingredients: result[0], recipes: result[1]};})
       );
   }
 }
