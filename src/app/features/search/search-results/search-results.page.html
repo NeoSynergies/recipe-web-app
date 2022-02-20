@@ -8,6 +8,11 @@
 
         <app-loading-spinner *ngIf="loading"></app-loading-spinner>
 
+        <!-- we could evaluate if there are no > 0 lengths in the html but to have it cleaner and scalable we do it on the search service -->
+        <div class="search-results-not-found" *ngIf="!loading && !filteredResults.thereAreResults">
+          0 results found
+        </div>
+
         <div *ngIf="filteredResults && !loading">
 
           <div *ngIf="filteredResults.ingredients.length > 0">

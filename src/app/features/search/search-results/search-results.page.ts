@@ -9,10 +9,7 @@ import { SearchService } from 'src/app/common/services/search/search.service';
   styleUrls: ['./search-results.page.scss'],
 })
 export class SearchResultsPage implements OnInit {
-  filteredResults = {
-    ingredients: [],
-    recipes: []
-  };
+  filteredResults;
   searchTerm: string;
   loading: boolean = false;
 
@@ -34,23 +31,14 @@ export class SearchResultsPage implements OnInit {
     this.loading = true;
     const term = event.replace(/[^A-Za-z0-9\s!?]/g,'').toLowerCase();
 
+    // if there are no items for that search it will open the error alert but that won't happen with a real backend
     return this.searchService.globalSearch(term)
       .pipe(delay(500))
       .subscribe(result => {
-        // FILTERING BASIC FUNCTION
-        // regex the element text -> check if text have the term
-        this.filteredResults = {
-          ingredients: result.ingredients.filter(element => this.regexString(element.label).includes(term)),
-          recipes: result.recipes.filter(element => this.regexString(element.title).includes(term))
-        };
-
+        this.filteredResults = result;
         this.loading = false;
       });
   }
-  
-  // this function delete commas, dots, and set all the characters to lower case
-  private regexString(text: string): string {
-    return text.replace(/[^A-Za-z0-9\s!?]/g,'').toLowerCase();
-  }
+
 
 }
