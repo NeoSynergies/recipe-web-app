@@ -17,7 +17,7 @@ export class AuthService {
   ) { }
 
   getUser() {
-    this.http.get('http://localhost:3000/users/a')
+    this.http.get('http://localhost:3000/users/aijsndiusad')
       .pipe(
         catchError(() => this.errorHandlingService.returnErrorAndShowModal('We couldn\'t load the user')),
         map(user => Object.keys(user).length === 0 ? null : user)
