@@ -15,7 +15,7 @@
           <ul>
             <li *ngFor="let ingredient of recipe.ingredients">
               <div>
-                {{ ingredient.amount }} {{ ingredient.unit }} of {{ ingredient.label }} <app-add-to-shopping-list [values]="ingredient" valuesCategory="ingredients"></app-add-to-shopping-list>
+                {{ ingredient.amount }} {{ ingredient.unit }} of {{ ingredient.label }} <app-add-to-shopping-list *ngIf="user" [values]="ingredient" valuesCategory="ingredients"></app-add-to-shopping-list>
               </div>
             </li>
           </ul>
@@ -27,12 +27,12 @@
             </li>
           </ol>
 
-          <ion-button *ngIf="user.id === recipe.userId" expand="block" fill="clear" color="danger" (click)="onDeleteRecipe()">
+          <ion-button *ngIf="user?.id === recipe.userId" expand="block" fill="clear" color="danger" (click)="onDeleteRecipe()">
             <ion-icon name="trash-outline" slot="start"></ion-icon>
             Delete a recipe
           </ion-button>
 
-          <ion-button *ngIf="user.id === recipe.userId" expand="block" fill="clear" color="warning" (click)="onEditRecipe()">
+          <ion-button *ngIf="user?.id === recipe.userId" expand="block" fill="clear" color="warning" (click)="onEditRecipe()">
             <ion-icon name="pencil-outline" slot="start"></ion-icon>
             Edit the recipe
           </ion-button>
