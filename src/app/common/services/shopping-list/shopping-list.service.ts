@@ -1,7 +1,8 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
+import { RecipeIngredient } from '../../interfaces/recipes';
 import { User } from '../../interfaces/user';
 import { AuthService } from '../auth/auth.service';
 import { ErrorHandlingService } from '../error/error-handling.service';
@@ -19,12 +20,25 @@ export class ShoppingListService{
     private errorHandlingService: ErrorHandlingService
   ) {
     this.authService.user
-      .subscribe(user => {
-        if (user) { // just execute the getShopping function when there is the user object
-          this.user = user;
-          this.shoppingListElements.next([...user.ingredients]); // spread operator here prevents same instance problems when pushing values
-        }
+      .pipe(
+        switchMap((user) => {
+          if (user) {
+            this.user = user;
+            return this.getUserIngredients();
+          }
+          return of([]);
+        })
+      )
+      .subscribe((ingredients: any) => {
+        console.log('the ingredients EEEEEE');
+        console.log(ingredients);
+        
+        this.shoppingListElements.next(ingredients.ingredients)
       });
+  }
+
+  getUserIngredients(): Observable<RecipeIngredient[]> {
+    return this.http.get<RecipeIngredient[]>('http://localhost:3000/ingredients/' + this.user.id);
   }
 
   // WE WILL substitute the whole USER object because I don't know if i can create new endpoints
@@ -35,20 +49,36 @@ export class ShoppingListService{
       ...values,
     };
 
-    this.user.ingredients.push(values);
-    return this.substituteUserAndGetIngredients();
+    const ingredients = [...this.shoppingListElements.getValue(), values];
+    this.shoppingListElements.next(ingredients);
+
+    const dbObjectToSubstitute = {
+      id: this.user.id,
+      ingredients
+    }
+    // we update the local shopping list
+    return this.substituteDbObject(dbObjectToSubstitute);
+
   }
 
   deleteShoppingListElements(values: any): Observable<any> {
-    this.user.ingredients = this.user.ingredients.filter(ingredient => ingredient.id !== values.id);
-    return this.substituteUserAndGetIngredients();
+
+    const ingredients = this.shoppingListElements.getValue().filter(ingredient => ingredient.id !== values.id);
+    const dbObjectToSubstitute = {
+      id: this.user.id,
+      ingredients
+    }
+
+    this.shoppingListElements.next(ingredients);
+
+    return this.substituteDbObject(dbObjectToSubstitute);
   }
 
-  substituteUserAndGetIngredients(): Observable<any> {
-    return this.http.put('http://localhost:3000/users/'+ this.user.id, this.user)
+  substituteDbObject(object) {
+    // we update the server shopping list
+    return this.http.put('http://localhost:3000/ingredients/'+ this.user.id, object)
       .pipe(
-        catchError(() => this.errorHandlingService.returnErrorAndShowModal('There was an error with the server')),
-        tap(() => this.shoppingListElements.next(this.user.ingredients))
+        catchError(() => this.errorHandlingService.returnErrorAndShowModal('There was an error with the server'))
       );
   }
 
