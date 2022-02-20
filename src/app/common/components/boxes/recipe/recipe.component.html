@@ -1,0 +1,9 @@
+<ion-item button>
+  <ion-thumbnail slot="start">
+    <img [src]="'http://localhost:3000' + recipe.imageUrl" alt="">
+  </ion-thumbnail>
+  <ion-label>
+    <b>{{ recipe.title }}</b>
+    <p>{{ recipe.ingredients.length }} ingredients</p>
+  </ion-label>
+</ion-item>

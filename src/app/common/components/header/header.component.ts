@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { PopoverController } from '@ionic/angular';
+import { combineLatest } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { RecipesService } from '../../services/recipes/recipes.service';
 import { ShoppingListService } from '../../services/shopping-list/shopping-list.service';
 import { ShoppingListPopoverComponent } from './shopping-list-popover/shopping-list-popover.component';
 
@@ -11,19 +14,16 @@ import { ShoppingListPopoverComponent } from './shopping-list-popover/shopping-l
 })
 export class HeaderComponent implements OnInit {
   shoppingListElements = [];
+
   constructor(
     private shoppingListService: ShoppingListService,
-    public popoverController: PopoverController
+    public popoverController: PopoverController,
+    private router: Router
   ) { }
 
   ngOnInit() {
     this.shoppingListService.shoppingListElements
-      .subscribe(elements => {
-        console.log('SUSCRITO');
-        console.log(elements);
-        
-        this.shoppingListElements = elements
-      });
+      .subscribe(elements => this.shoppingListElements = elements);
   }
 
   async onOpenShoppingList(ev, shoppingListElements) {
@@ -34,5 +34,9 @@ export class HeaderComponent implements OnInit {
       cssClass: 'shopping-list-popover'
     });
     return await popover.present();
+  }
+
+  onRedirectToSearch(event) {
+    this.router.navigate(['/search/'+event]);
   }
 }

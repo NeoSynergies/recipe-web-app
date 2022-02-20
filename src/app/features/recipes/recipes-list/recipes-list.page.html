@@ -9,18 +9,11 @@
           Add a recipe
         </ion-button>
         <br>
-        <ion-item button *ngFor="let recipe of recipes" [routerLink]="'/recipes/recipe/' + recipe.id">
-          <ion-thumbnail slot="start">
-            <img [src]="'http://localhost:3000' + recipe.imageUrl" alt="">
-          </ion-thumbnail>
-          <ion-label>
-            <b>{{ recipe.title }}</b>
-            <p>{{ recipe.ingredients.length }} ingredients</p>
-          </ion-label>
-        </ion-item>
+        <app-recipe *ngFor="let recipe of recipes" [routerLink]="'/recipes/recipe/' + recipe.id" [recipe]="recipe"></app-recipe>
 
       </ion-col>
     </ion-row>
   </ion-grid>
 
 </ion-content>
+ 

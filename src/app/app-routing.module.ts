@@ -11,6 +11,10 @@ const routes: Routes = [
     path: 'recipes',
     loadChildren: () => import('./features/recipes/recipes.module').then( m => m.RecipesModule)
   },
+  {
+    path: 'search/:searchTerm',
+    loadChildren: () => import('./features/search/search-results/search-results.module').then( m => m.SearchResultsPageModule)
+  },
 ];
 
 @NgModule({
