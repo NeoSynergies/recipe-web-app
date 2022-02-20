@@ -4,10 +4,14 @@ Steps to initalize the project:
     - npm install
     - ionic serve
 
-If you want to test the authentication
+If you want to test the authentication:
+
     - Go to the auth.service
+
     - Change the user id (per default: aijsndiusad) of the endpoint 'http://localhost:3000/users/aijsndiusad'
+
     - If you don't create a user in the backend db you will see the web as a non authenticated user
+    
 
 Some considerations:
 
