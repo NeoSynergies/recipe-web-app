@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { User } from '../../interfaces/user';
 import { AuthService } from '../auth/auth.service';
+import { ErrorHandlingService } from '../error/error-handling.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,8 @@ export class ShoppingListService{
 
   constructor(
     private http: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
+    private errorHandlingService: ErrorHandlingService
   ) {
     this.authService.user
       .subscribe(user => {
@@ -47,6 +49,7 @@ export class ShoppingListService{
   substituteUserAndGetIngredients(): Observable<any> {
     return this.http.put('http://localhost:3000/users/'+ this.user.id, this.user)
       .pipe(
+        catchError(() => this.errorHandlingService.returnErrorAndShowModal('There was an error with the server')),
         tap(
           () => this.shoppingListElements.next(this.user.ingredients),
           (err) => {
