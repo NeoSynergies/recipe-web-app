@@ -23,15 +23,11 @@ export class RecipesListPage {
   private getAllRecipes() {
     this.loading = true;
     this.recipesService.getAllRecipes()
-      .pipe(delay(1000))
+      .pipe(delay(500))
       .subscribe((recipes: Recipe[]) => {
         this.recipes = recipes;
         this.loading = false;
       });
-  }
-
-  onSeeRecipeDetails(recipeId: string) {
-
   }
 
 }

@@ -35,7 +35,7 @@ export class SearchResultsPage implements OnInit {
     const term = event.replace(/[^A-Za-z0-9\s!?]/g,'').toLowerCase();
 
     return this.searchService.globalSearch(term)
-      .pipe(delay(1000))
+      .pipe(delay(500))
       .subscribe(result => {
         // FILTERING BASIC FUNCTION
         // regex the element text -> check if text have the term

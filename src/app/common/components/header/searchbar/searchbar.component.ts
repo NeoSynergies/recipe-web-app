@@ -14,6 +14,7 @@ export class SearchbarComponent {
 
   onSearch(term) {
     this.searchbar.value = "";
+    if (term == '') return;
     this.search.emit(term);
   }
 

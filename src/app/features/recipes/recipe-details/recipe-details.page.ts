@@ -29,7 +29,7 @@ export class RecipeDetailsPage implements OnInit {
     this.loading = true;
     this.authService.user
       .pipe(
-        delay(1000),
+        delay(500),
         tap(user => this.user = user), // we set the user
         switchMap(() => {
           return this.route.params; // we get the params
